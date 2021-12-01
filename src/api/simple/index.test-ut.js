@@ -54,7 +54,7 @@ describe('Api - UT', () => {
             };
 
             // Run unit under test
-            api.getErrorExample(reqStub, resStub, nextMock);
+            api.postErrorExample(reqStub, resStub, nextMock);
         });
 
     });

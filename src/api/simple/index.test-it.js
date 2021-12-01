@@ -26,9 +26,24 @@ describe('Simple - IT', () => {
 
     describe('GET /api/simple/get-item-by-param', () => {
 
-        it('get list', (done) => {
+        it('get item by param', (done) => {
             chai.request(server)
                 .get('/api/simple/get-item-by-param?id=0')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body.id).to.equal(0);
+                    done();
+                });
+        });
+
+    });
+
+    describe('GET /api/simple/get-item-by-route', () => {
+
+        it('get item by route', (done) => {
+            chai.request(server)
+                .get('/api/simple/get-item-by-route/0')
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an('object');

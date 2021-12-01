@@ -95,6 +95,20 @@ describe('Errors - UT', () => {
             done()
         })
 
+        it('creates a new error with message null', (done) => {
+            const errNoStatus = errors.newHttpError(200, null)
+
+            expect(errNoStatus.message).to.equal('')
+            done()
+        })
+
+        it('creates a new error with message undefined', (done) => {
+            const errNoStatus = errors.newHttpError(200)
+
+            expect(errNoStatus.message).to.equal('')
+            done()
+        })
+
     })
 
 })
