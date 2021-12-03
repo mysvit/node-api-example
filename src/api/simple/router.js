@@ -22,10 +22,10 @@ router.get('/simple/get-item-by-route-handlers/:name', simple.getItemByRouteHand
 
 // express.urlencoded({ extended: true })
 router.post('/simple/post-item', simple.postItem)
-router.post('/simple/get-error-example', simple.postErrorExample)
+router.post('/simple/post-error-example', simple.postErrorExample)
 
 // update content
-router.put('/simple/put-item/:action', simple.putItem)
+router.put('/simple/put-item/:id/:action', simple.putItem)
 
 // delete
 router.delete('/simple/delete-item/:id', simple.deleteItem)

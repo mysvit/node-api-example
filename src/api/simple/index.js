@@ -3,10 +3,15 @@ const errors = require('../../errors')
 const logger = require('../../../logger')
 
 const api_list = [
-    {'id': 0, 'name': 'get without parameters - return list'},
-    {'id': 1, 'name': 'get with parameter ID: - return one'},
-    {'id': 2, 'name': 'delete api'}
+    {'id': 0, 'name': 'Get List without parameters'},
+    {'id': 1, 'name': 'Get Item by PARAM id:'},
+    {'id': 2, 'name': 'Get Item by ROUTE id:'},
+    {'id': 3, 'name': 'Get Item by ROUTE HANDLE name:'},
+    {'id': 4, 'name': 'POST Item id:'},
+    {'id': 5, 'name': 'PUT Item id:'},
+    {'id': 6, 'name': 'Delete Item id:'}
 ]
+exports.api_list = api_list
 
 // get api without parameters - return simple list
 exports.getList = (req, res) => {
@@ -34,11 +39,13 @@ exports.paramName = (req, res, next, name) => {
     next()
 }
 
+
 exports.getItemByRouteHandlers = (req, res) => {
     const name = req.params.name
     const apiOne = api_list.find(f => f.name.indexOf(name) >= 0)
     res.status(200).json(apiOne)
 }
+
 
 exports.postItem = (req, res) => {
     res.send({
@@ -49,18 +56,17 @@ exports.postItem = (req, res) => {
 
 
 exports.postErrorExample = (req, res, next) => {
-    // Simulate a custom error
-    next(errors.newHttpError(400, 'bad request'))
+    next(errors.newHttpError(400, 'Simulate a custom error!'))
 }
 
 
 exports.putItem = (req, res, next) => {
     switch (req.params.action) {
         case 'text':
-            res.status(200).send({'text updated': req.body.name})
+            res.status(200).send({'id:': req.params.id, 'action': req.params.action, 'body name': req.body.name})
             break
         case 'img':
-            res.status(200).send({'image updated': req.body.name})
+            res.status(200).send({'id:': req.params.id, 'action': req.params.action, 'body name': req.body.name})
             break
         default:
             next(errors.newHttpError(400, 'bad parameter: [action]'))
@@ -69,5 +75,5 @@ exports.putItem = (req, res, next) => {
 
 
 exports.deleteItem = (req, res) => {
-    res.status(200).send({'deleted id:': req.params.id})
+    res.status(200).send({'Deleted id:': req.params.id})
 }

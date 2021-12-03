@@ -17,7 +17,7 @@ describe('Simple - IT', () => {
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an('array');
-                    expect(res.body.length).to.equal(3);
+                    expect(res.body.length).to.equal(7);
                     done();
                 });
         });
@@ -58,11 +58,11 @@ describe('Simple - IT', () => {
 
         it('returns an error', (done) => {
             chai.request(server)
-                .post('/api/simple/get-error-example')
+                .post('/api/simple/post-error-example')
                 .end((err, res) => {
                     expect(res).to.have.status(400);
                     expect(res.body).to.be.an('object');
-                    expect(res.body.message).to.equal('bad request');
+                    expect(res.body.message).to.equal('Simulate a custom error!');
                     done();
                 });
         });

@@ -19,13 +19,7 @@ describe('Api - UT', () => {
                 return resMock.status;
             };
             resMock.status.json = (json) => {
-                const expectedApis = [
-                    {'id': 0, 'name': 'get without parameters - return list'},
-                    {'id': 1, 'name': 'get with parameter ID: - return one'},
-                    {'id': 2, 'name': 'delete api'}
-                ];
-
-                expect(json).to.deep.equal(expectedApis);
+                expect(json).to.deep.equal(api.api_list);
                 done();
             };
 
@@ -42,17 +36,14 @@ describe('Api - UT', () => {
         it('passes an error along', (done) => {
             // Stub req
             const reqStub = null;
-
             // Stub res
             const resStub = null;
-
             // Mock next
             const nextMock = (err) => {
                 expect(err.status).to.equal(400)
-                expect(err.message).to.equal('bad request');
+                expect(err.message).to.equal('Simulate a custom error!');
                 done();
             };
-
             // Run unit under test
             api.postErrorExample(reqStub, resStub, nextMock);
         });
