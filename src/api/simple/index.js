@@ -7,9 +7,9 @@ const api_list = [
     {'id': 1, 'name': 'Get Item by PARAM id:'},
     {'id': 2, 'name': 'Get Item by ROUTE id:'},
     {'id': 3, 'name': 'Get Item by ROUTE HANDLE name:'},
-    {'id': 4, 'name': 'POST Item id:'},
-    {'id': 5, 'name': 'PUT Item id:'},
-    {'id': 6, 'name': 'Delete Item id:'}
+    {'id': 4, 'name': 'POST Item in body object'},
+    {'id': 5, 'name': 'PUT with parameter and body object'},
+    {'id': 6, 'name': 'Delete Item by PARAM id:'}
 ]
 exports.api_list = api_list
 
@@ -34,16 +34,15 @@ exports.getItemByRoute = (req, res) => {
 
 
 exports.paramName = (req, res, next, name) => {
-    req.name = name.toLowerCase()
+    // work with parameter NAME and add it to REQ
+    req.name = name.toUpperCase()
     logger.log('info', `param Name: ${name}`)
     next()
 }
 
 
 exports.getItemByRouteHandlers = (req, res) => {
-    const name = req.params.name
-    const apiOne = api_list.find(f => f.name.indexOf(name) >= 0)
-    res.status(200).json(apiOne)
+    res.status(200).json({"ROUTE HANDLER MODIFY PARAMETER NAME:": req.name})
 }
 
 
