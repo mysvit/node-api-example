@@ -73,6 +73,14 @@ exports.putItem = (req, res, next) => {
 }
 
 
+exports.patchItem = (req, res) => {
+    res.send({
+        'id': req.body.id,
+        'name': req.body.name,
+        'req_params': req.params
+    })
+}
+
 exports.deleteItem = (req, res) => {
     res.status(200).send({'Deleted id:': req.params.id})
 }

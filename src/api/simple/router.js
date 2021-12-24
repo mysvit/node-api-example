@@ -27,6 +27,9 @@ router.post('/simple/post-error-example', simple.postErrorExample)
 // update content
 router.put('/simple/put-item/:id/:action', simple.putItem)
 
+// patch content
+router.patch('/simple/patch-item/:id', simple.patchItem)
+
 // delete
 router.delete('/simple/delete-item/:id', simple.deleteItem)
 
