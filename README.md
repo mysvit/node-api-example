@@ -27,6 +27,11 @@ npm run coverage
 npm start
 ```
 
+For develop
+```
+npm run start
+```
+
 For debug
 ```
 npm run debug

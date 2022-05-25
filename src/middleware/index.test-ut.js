@@ -1,8 +1,7 @@
-'use strict'
+import chai from 'chai'
+import {doSomethingInteresting} from './index.js'
 
-const chai = require('chai')
 const expect = chai.expect
-const middleware = require('./index')
 
 describe('Middleware - UT', () => {
 
@@ -19,7 +18,7 @@ describe('Middleware - UT', () => {
                 done()
             }
             // Run unit under test
-            middleware.doSomethingInteresting(reqStub, resStub, nextMock)
+            doSomethingInteresting(reqStub, resStub, nextMock)
         })
 
     })

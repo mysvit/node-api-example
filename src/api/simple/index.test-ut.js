@@ -1,8 +1,7 @@
-'use strict';
+import chai from 'chai'
+import {api_list, getList, postErrorExample} from './index.js'
 
-const chai = require('chai');
 const expect = chai.expect;
-const api = require('./index');
 
 describe('Api - UT', () => {
 
@@ -15,21 +14,21 @@ describe('Api - UT', () => {
             // Mock res
             const resMock = {};
             resMock.status = (statusCode) => {
-                expect(statusCode).to.equal(200);
+                expect(statusCode).to.equal(200)
                 return resMock.status;
             };
             resMock.status.json = (json) => {
-                expect(json).to.deep.equal(api.api_list);
-                done();
+                expect(json).to.deep.equal(api_list)
+                done()
             };
 
             // Stub next
             const nextStub = null;
 
             // Run unit under test
-            api.getList(reqStub, resMock, nextStub)
-        });
-    });
+            getList(reqStub, resMock, nextStub)
+        })
+    })
 
     describe('getErrorExample()', () => {
 
@@ -41,13 +40,13 @@ describe('Api - UT', () => {
             // Mock next
             const nextMock = (err) => {
                 expect(err.status).to.equal(400)
-                expect(err.message).to.equal('Simulate a custom error!');
-                done();
+                expect(err.message).to.equal('Simulate a custom error!')
+                done()
             };
             // Run unit under test
-            api.postErrorExample(reqStub, resStub, nextMock);
-        });
+            postErrorExample(reqStub, resStub, nextMock)
+        })
 
-    });
+    })
 
-});
+})

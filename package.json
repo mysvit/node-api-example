@@ -2,6 +2,7 @@
   "name": "api-example",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "description": "",
   "author": "Summer Mix <smix@tuta.io> (https://github.com/mysvit)",
   "license": "MIT",
@@ -9,8 +10,8 @@
   "scripts": {
     "test": "NODE_ENV=test mocha src/**/*.test-*.js --exit",
     "coverage": "nyc --reporter=lcov --reporter=text npm run test",
-    "debug": "node --inspect server.js",
-    "start": "node server.js"
+    "debug": "nodemon --inspect server.js",
+    "start": "nodemon ./server.js"
   },
   "dependencies": {
     "config": "^3.3.6",
@@ -25,7 +26,8 @@
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
     "mocha": "^9.1.3",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "nodemon": "^2.0.16"
   },
   "nyc": {
     "include": "src"

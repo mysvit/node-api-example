@@ -1,19 +1,20 @@
-'use strict';
+import express from 'express'
+import {doSomethingInteresting} from './src/middleware/index.js';
+import {errorHandler, nullRoute} from "./src/errors/index.js";
+import {simpleRouter} from "./src/api/simple/router.js";
 
-const router = require('express').Router()
-const middleware = require('./src/middleware')
-const errors = require('./src/errors');
-const apiRouter = require('./src/api/simple/router')
 
+const routes = express.Router()
 // Wire up routers
-router.use('/api', apiRouter);
+routes.use('/api', simpleRouter);
 
 // Wire up middleware
-router.use(middleware.doSomethingInteresting)
+routes.use(doSomethingInteresting)
 
 // Wire up error-handling middleware
-router.use(errors.errorHandler);
-router.use(errors.nullRoute);
+routes.use(errorHandler);
+routes.use(nullRoute);
 
 // Export the router
-module.exports = router;
+// module.exports = router;
+export {routes}

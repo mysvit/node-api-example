@@ -1,8 +1,10 @@
-'use strict'
+import chai from 'chai'
+import chaiHttp from 'chai-http'
+import {server} from '../../server.js'
 
-const chai = require('chai')
 const expect = chai.expect
-const server = require('../../server')
+
+chai.use(chaiHttp)
 
 describe('Errors - IT', () => {
 

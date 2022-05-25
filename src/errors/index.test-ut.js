@@ -1,8 +1,7 @@
-'use strict'
+import chai from 'chai'
+import {errorHandler, newHttpError, nullRoute} from './index.js'
 
-const chai = require('chai')
 const expect = chai.expect
-const errors = require('./index')
 
 describe('Errors - UT', () => {
 
@@ -28,29 +27,30 @@ describe('Errors - UT', () => {
             // Stub next
             const nextStub = null
             // Run unit under test
-            errors.errorHandler(errStub, reqStub, resMock, nextStub)
+            errorHandler(errStub, reqStub, resMock, nextStub)
         })
 
-        it('handles errors without status', (done) => {
-            // Stub err
-            const errStub = new Error('some error')
-            // Stub req
-            const reqStub = null
-            // Mock res
-            const resMock = {}
-            resMock.status = (statusCode) => {
-                expect(statusCode).to.equal(500)
-                return resMock.status
-            }
-            resMock.status.json = (json) => {
-                expect(json).to.deep.equal({message: 'internal server error'})
-                done()
-            }
-            // Stub next
-            const nextStub = null
-            // Run unit under test
-            errors.errorHandler(errStub, reqStub, resMock, nextStub)
-        })
+        it('handles errors without status',
+            (done) => {
+                // Stub err
+                const errStub = new Error('some error')
+                // Stub req
+                const reqStub = null
+                // Mock res
+                const resMock = {}
+                resMock.status = (statusCode) => {
+                    expect(statusCode).to.equal(500)
+                    return resMock.status
+                }
+                resMock.status.json = (json) => {
+                    expect(json).to.deep.equal({message: 'internal server error'})
+                    done()
+                }
+                // Stub next
+                const nextStub = null
+                // Run unit under test
+                errorHandler(errStub, reqStub, resMock, nextStub)
+            })
 
     })
 
@@ -72,7 +72,7 @@ describe('Errors - UT', () => {
             // Stub next
             const nextStub = null
             // Run unit under test
-            errors.nullRoute(reqStub, resMock, nextStub)
+            nullRoute(reqStub, resMock, nextStub)
         })
 
     })
@@ -80,7 +80,7 @@ describe('Errors - UT', () => {
     describe('newHttpError()', () => {
 
         it('creates a new error', (done) => {
-            const err = errors.newHttpError(401, 'unauthorized')
+            const err = newHttpError(401, 'unauthorized')
 
             expect(err.status).to.equal(401)
             expect(err.message).to.equal('unauthorized')
@@ -88,7 +88,7 @@ describe('Errors - UT', () => {
         })
 
         it('creates a new error without status', (done) => {
-            const errNoStatus = errors.newHttpError(null, 'status is null')
+            const errNoStatus = newHttpError(null, 'status is null')
 
             expect(errNoStatus.status).to.be.null
             expect(errNoStatus.message).to.equal('status is null')
@@ -96,14 +96,14 @@ describe('Errors - UT', () => {
         })
 
         it('creates a new error with message null', (done) => {
-            const errNoStatus = errors.newHttpError(200, null)
+            const errNoStatus = newHttpError(200, null)
 
             expect(errNoStatus.message).to.equal('')
             done()
         })
 
         it('creates a new error with message undefined', (done) => {
-            const errNoStatus = errors.newHttpError(200)
+            const errNoStatus = newHttpError(200)
 
             expect(errNoStatus.message).to.equal('')
             done()

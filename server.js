@@ -1,31 +1,41 @@
 'use strict'
 // Config
-const config = require('config')
+import config from 'config'
 // Logging
-const morgan = require('morgan')
-const logger = require('./logger')
-
+import morgan from 'morgan'
+// import {logger, stream} from './logger'
 // API boilerplate
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const helmet = require('helmet')
-const routes = require('./routes')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import helmet from 'helmet'
+import {routes} from './routes.js'
+import {logger, loggerStream} from "./logger.js";
+
 
 // Configure express
-const app = express()
-app.use(bodyParser.json())
-app.use(express.urlencoded({extended: true}))
-app.use(morgan('short', {stream: logger.stream}))
-// Enable 11 function from 15 by default
-app.use(helmet())
-// Enable All CORS Requests
-app.use(cors())
-app.use('/', routes)
+function app() {
+    const app = express()
+    app.use(bodyParser.json())
+    app.use(express.urlencoded({extended: true}))
+    app.use(morgan('short', {stream: loggerStream}))
+    // Enable 11 function from 15 by default
+    app.use(helmet())
+    // Enable All CORS Requests
+    app.use(cors())
+    app.use('/', routes)
+    return app
+}
 
 // Start the API
-app.listen(config.apiPort)
-logger.log('info', `Server started! Api running on port ${config.apiPort}`)
+
+const server = app()
+server.listen(config.apiPort, () => {
+    logger.log('info', `Server started! Api running on port ${config.apiPort}`)
+});
+server.on('close', () => {
+    logger.log('info', 'Node Express server closed!')
+});
 
 // Export API server for testing
-module.exports = app
+export {server}

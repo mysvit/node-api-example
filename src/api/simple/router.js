@@ -1,37 +1,47 @@
-'use strict'
+import express from 'express'
+import {
+    deleteItem,
+    getItemByParam,
+    getItemByRoute,
+    getItemByRouteHandlers,
+    getList,
+    paramName,
+    patchItem,
+    postErrorExample,
+    postItem,
+    putItem
+} from './index.js'
 
 // Router
-const router = require('express').Router()
-const simple = require('./index')
-
+const simpleRouter = express.Router()
 // apiUrl+/simple/get-list
-router.get('/simple/get-list', simple.getList)
+simpleRouter.get('/simple/get-list', getList)
 
 // apiUrl+/simple/get-item-by-param?id:1
 // get item by param for that we use body-parser library
-router.get('/simple/get-item-by-param', simple.getItemByParam)
+simpleRouter.get('/simple/get-item-by-param', getItemByParam)
 
 // apiUrl+/simple/get-item-by-route/1
 // get item by route param for that don't need to use body-parser library
-router.get('/simple/get-item-by-route/:id', simple.getItemByRoute)
+simpleRouter.get('/simple/get-item-by-route/:id', getItemByRoute)
 
 // apiUrl+/simple/get-item-by-route-handlers/name
 // get item by param with Route Handlers
-router.param('name', simple.paramName)
-router.get('/simple/get-item-by-route-handlers/:name', simple.getItemByRouteHandlers)
+simpleRouter.param('name', paramName)
+simpleRouter.get('/simple/get-item-by-route-handlers/:name', getItemByRouteHandlers)
 
 // express.urlencoded({ extended: true })
-router.post('/simple/post-item', simple.postItem)
-router.post('/simple/post-error-example', simple.postErrorExample)
+simpleRouter.post('/simple/post-item', postItem)
+simpleRouter.post('/simple/post-error-example', postErrorExample)
 
 // update content
-router.put('/simple/put-item/:id/:action', simple.putItem)
+simpleRouter.put('/simple/put-item/:id/:action', putItem)
 
 // patch content
-router.patch('/simple/patch-item/:id', simple.patchItem)
+simpleRouter.patch('/simple/patch-item/:id', patchItem)
 
 // delete
-router.delete('/simple/delete-item/:id', simple.deleteItem)
+simpleRouter.delete('/simple/delete-item/:id', deleteItem)
 
 // export the router
-module.exports = router
+export {simpleRouter}

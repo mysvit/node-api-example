@@ -1,7 +1,5 @@
-'use strict'
-
 // Handle any errors that come up
-exports.errorHandler = (err, req, res, next) => {
+function errorHandler(err, req, res, next) {
     if (err.status) {
         res.status(err.status).json({'message': err.message})
     } else {
@@ -10,12 +8,12 @@ exports.errorHandler = (err, req, res, next) => {
 }
 
 // Handle case where user requests nonexistent endpoint
-exports.nullRoute = (req, res, next) => {
+function nullRoute(req, res, next) {
     res.status(404).json({message: 'not found'})
 }
 
 // Create an error for the api error handler
-exports.newHttpError = (status, message) => {
+function newHttpError(status, message) {
     let err;
     if (message === null || message === undefined) {
         err = new Error();
@@ -25,3 +23,5 @@ exports.newHttpError = (status, message) => {
     err.status = status;
     return err;
 }
+
+export {errorHandler, nullRoute, newHttpError}

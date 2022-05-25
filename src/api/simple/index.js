@@ -1,6 +1,6 @@
-'use strict';
-const errors = require('../../errors')
-const logger = require('../../../logger')
+import config from 'config'
+import {logger} from "../../../logger.js";
+import {newHttpError} from "../../errors/index.js";
 
 const api_list = [
     {'id': 0, 'name': 'Get List without parameters'},
@@ -11,55 +11,49 @@ const api_list = [
     {'id': 5, 'name': 'PUT with parameter and body object'},
     {'id': 6, 'name': 'Delete Item by PARAM id:'}
 ]
-exports.api_list = api_list
 
 // get api without parameters - return simple list
-exports.getList = (req, res) => {
+function getList(req, res) {
+    console.debug('config.db', config.db)
+    console.debug('node', process)
     res.status(200).json(api_list)
 }
 
-
-exports.getItemByParam = (req, res) => {
+function getItemByParam(req, res) {
     const id = req.query.id
     const apiOne = api_list.find(f => f.id === parseInt(id, 10))
     res.status(200).json(apiOne)
 }
 
-
-exports.getItemByRoute = (req, res) => {
+function getItemByRoute(req, res) {
     const id = req.params.id
     const apiOne = api_list.find(f => f.id === parseInt(id, 10))
     res.status(200).json(apiOne)
 }
 
-
-exports.paramName = (req, res, next, name) => {
+function paramName(req, res, next, name) {
     // work with parameter NAME and add it to REQ
     req.name = name.toUpperCase()
     logger.log('info', `param Name: ${name}`)
     next()
 }
 
-
-exports.getItemByRouteHandlers = (req, res) => {
+function getItemByRouteHandlers(req, res) {
     res.status(200).json({"ROUTE HANDLER MODIFY PARAMETER NAME:": req.name})
 }
 
-
-exports.postItem = (req, res) => {
+function postItem(req, res) {
     res.send({
         'id': req.body.id,
         'name': req.body.name
     })
 }
 
-
-exports.postErrorExample = (req, res, next) => {
-    next(errors.newHttpError(400, 'Simulate a custom error!'))
+function postErrorExample(req, res, next) {
+    next(newHttpError(400, 'Simulate a custom error!'))
 }
 
-
-exports.putItem = (req, res, next) => {
+function putItem(req, res, next) {
     switch (req.params.action) {
         case 'text':
             res.status(200).send({'id:': req.params.id, 'action': req.params.action, 'body name': req.body.name})
@@ -68,12 +62,11 @@ exports.putItem = (req, res, next) => {
             res.status(200).send({'id:': req.params.id, 'action': req.params.action, 'body name': req.body.name})
             break
         default:
-            next(errors.newHttpError(400, 'bad parameter: [action]'))
+            next(newHttpError(400, 'bad parameter: [action]'))
     }
 }
 
-
-exports.patchItem = (req, res) => {
+function patchItem(req, res) {
     res.send({
         'id': req.body.id,
         'name': req.body.name,
@@ -81,6 +74,8 @@ exports.patchItem = (req, res) => {
     })
 }
 
-exports.deleteItem = (req, res) => {
+function deleteItem(req, res) {
     res.status(200).send({'Deleted id:': req.params.id})
 }
+
+export {api_list, getList, getItemByParam, getItemByRoute, paramName, getItemByRouteHandlers, postItem, postErrorExample, putItem, patchItem, deleteItem}
