@@ -3,7 +3,7 @@ function errorHandler(err, req, res, next) {
     if (err.status) {
         res.status(err.status).json({'message': err.message})
     } else {
-        res.status(500).json({message: 'internal server error'})
+        res.status(500).json({message: 'internal server error', err: err})
     }
 }
 
@@ -14,14 +14,14 @@ function nullRoute(req, res, next) {
 
 // Create an error for the api error handler
 function newHttpError(status, message) {
-    let err;
+    let err
     if (message === null || message === undefined) {
-        err = new Error();
+        err = new Error()
     } else {
-        err = new Error(message);
+        err = new Error(message)
     }
-    err.status = status;
-    return err;
+    err.status = status
+    return err
 }
 
 export {errorHandler, nullRoute, newHttpError}
