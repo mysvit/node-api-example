@@ -3,15 +3,13 @@
 import config from 'config'
 // Logging
 import morgan from 'morgan'
-// import {logger, stream} from './logger'
+import {logger, loggerStream} from './src/logger.mjs'
 // API boilerplate
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
-import {routes} from './routes.js'
-import {logger, loggerStream} from "./logger.js";
-
+import {routes} from './src/api/routes.mjs'
 
 // Configure express
 function app() {
@@ -32,10 +30,10 @@ function app() {
 const server = app()
 server.listen(config.apiPort, () => {
     logger.log('info', `Server started! Api running on port ${config.apiPort}`)
-});
+})
 server.on('close', () => {
     logger.log('info', 'Node Express server closed!')
-});
+})
 
 // Export API server for testing
 export {server}

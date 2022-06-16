@@ -10,10 +10,11 @@ import {
     postErrorExample,
     postItem,
     putItem
-} from './index.js'
+} from './simple-api.mjs'
 
 // Router
-const simpleRouter = express.Router()
+export const simpleRouter = express.Router()
+
 // apiUrl+/simple/get-list
 simpleRouter.get('/simple/get-list', getList)
 
@@ -42,6 +43,3 @@ simpleRouter.patch('/simple/patch-item/:id', patchItem)
 
 // delete
 simpleRouter.delete('/simple/delete-item/:id', deleteItem)
-
-// export the router
-export {simpleRouter}

@@ -1,5 +1,5 @@
 import chai from 'chai'
-import {doSomethingInteresting} from './index.js'
+import {doSomethingInteresting} from './middleware-api.mjs'
 
 const expect = chai.expect
 

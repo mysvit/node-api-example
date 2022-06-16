@@ -7,7 +7,7 @@ const loggerFormat = winston.format.printf(({level, message, timestamp}) => {
     return `{"timestamp": "${timestamp}", "level": "${level}", "message": "${message}"}`
 })
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
     level,
     format: winston.format.combine(
         winston.format.timestamp(),
@@ -21,10 +21,8 @@ const logger = winston.createLogger({
 })
 
 // Allow morgan middleware to write to winston
-const loggerStream = {
+export const loggerStream = {
     write: (message) => {
         logger.info(message.trim());
     }
 }
-
-export {logger, loggerStream}
