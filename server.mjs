@@ -29,7 +29,7 @@ function app() {
 
 const server = app()
 server.listen(config.apiPort, () => {
-    logger.log('info', `Server started! Api running on port ${config.apiPort}`)
+    logger.info('info', `Server started! Api running on port ${config.apiPort}`)
 })
 server.on('close', () => {
     logger.log('info', 'Node Express server closed!')
